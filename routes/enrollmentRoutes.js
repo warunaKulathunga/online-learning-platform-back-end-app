@@ -10,13 +10,11 @@ const validateTokenHandler = require("../middleware/validateTokenHandler");
 const adminOnlyMiddleware = require("../middleware/adminOnlyMiddleware");
 const router = express.Router();
 
+router.post("/", validateTokenHandler, createEnrollment);
+
 router.use(validateTokenHandler, adminOnlyMiddleware);
 
-router
-  .route("/")
-  .post(createEnrollment) // Create a new enrollment
-  .get(getEnrollments); // Get all enrollments
-
+router.route("/").get(getEnrollments); // Get all enrollments
 router
   .route("/:id")
   .get(getEnrollmentById) // Get a specific enrollment by ID
